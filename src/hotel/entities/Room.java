@@ -60,8 +60,12 @@ public class Room {
 
 
 	public Booking book(Guest guest, Date arrivalDate, int stayLength, int numberOfOccupants, CreditCard creditCard) {
-		// TODO Auto-generated method stub
-		return null;		
+		if (!isAvailable(arrivalDate, stayLength)) {
+			throw new RuntimeException("Cannot create an overlapping booking");	
+		}
+		Booking booking = new Booking(guest, this, arrivalDate, stayLength, numberOfOccupants, creditCard);
+		this.bookings.add(booking);
+		return booking;		
 	}
 
 

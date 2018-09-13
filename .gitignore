@@ -3,3 +3,4 @@
 bin/
 library.obj
 .DS_Store
+/testbin/
