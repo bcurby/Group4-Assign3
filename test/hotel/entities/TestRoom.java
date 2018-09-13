@@ -59,7 +59,7 @@ class TestRoom {
 		//arrange
 		bookings.add(booking);
 		when(bookingHelper.makeBooking(guest, room, arrivalDate, stayLength, numberOfOccupants, creditCard)).thenReturn(newBooking);
-		when(booking.doTimesConflict(arrivalDate, stayLength)).thenReturn(false);
+		when(booking.doTimesConflict(any(Date.class), anyInt())).thenReturn(false);
 		
 		//act
 		Booking actual = room.book(guest, arrivalDate, stayLength, numberOfOccupants, creditCard);
@@ -75,7 +75,7 @@ class TestRoom {
 	void testBookingWithConflict() {
 		//arrange
 		bookings.add(booking);
-		when(booking.doTimesConflict(arrivalDate, stayLength)).thenReturn(true);
+		when(booking.doTimesConflict(any(Date.class), anyInt())).thenReturn(true);
 		
 		//act
 		Executable e = () -> room.book(guest, arrivalDate, stayLength, numberOfOccupants, creditCard);
