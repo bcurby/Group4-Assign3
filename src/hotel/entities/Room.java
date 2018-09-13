@@ -11,10 +11,10 @@ public class Room {
 	
 	private enum State {READY, OCCUPIED}
 	
-	int id;
-	RoomType roomType;
-	List<Booking> bookings;
-	State state;
+	private int id;
+	private RoomType roomType;
+	private List<Booking> bookings;
+	private State state;
 
 	
 	public Room(int id, RoomType roomType) {

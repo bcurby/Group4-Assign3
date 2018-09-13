@@ -22,9 +22,25 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+@ExtendWith(MockitoExtension.class)
 class TestRoom {
 
+	@Mock Booking booking;
+	@Spy ArrayList<Booking> bookings;
+	@Mock Guest guest;
+	@Mock Date arrivalDate;
+	@Mock CreditCard creditCard;
+	
+	
+	int roomId = 1;
+	RoomType roomType = RoomType.SINGLE;
+	int stayLength = 1;
+	int numberOfOccupants = roomType.getMaxOccupancy();
+	
+	
+	@InjectMocks Room room = new Room(1, RoomType.SINGLE);
+	
+	
 	@BeforeEach
 	void setUp() throws Exception {
 	}
@@ -33,9 +49,15 @@ class TestRoom {
 	void tearDown() throws Exception {
 	}
 
+	
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testBooking() {
+		//arrange
+		//act
+		Booking actual = room.book(guest, arrivalDate, stayLength, numberOfOccupants, creditCard);
+		//assert
+		assertNotNull(actual);
+		assertTrue(bookings.contains(actual));
 	}
 
 }
