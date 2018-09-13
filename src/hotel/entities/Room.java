@@ -72,7 +72,10 @@ public class Room {
 
 
 	public void checkin() {
-		// TODO Auto-generated method stub
+		if (this.state != State.READY) {
+			throw new RuntimeException("Cannot checkin to a room that isn't READY");
+		}
+		this.state = State.OCCUPIED;
 	}
 
 
