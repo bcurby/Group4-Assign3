@@ -30,6 +30,7 @@ class TestRoom {
 	@Mock Guest guest;
 	@Mock Date arrivalDate;
 	@Mock CreditCard creditCard;
+	@Mock BookingHelper bookingHelper;
 	
 	
 	int roomId = 1;
@@ -53,6 +54,7 @@ class TestRoom {
 	@Test
 	void testBooking() {
 		//arrange
+		when(bookingHelper.makeBooking(guest, room, arrivalDate, stayLength, numberOfOccupants, creditCard)).thenReturn(booking);
 		//act
 		Booking actual = room.book(guest, arrivalDate, stayLength, numberOfOccupants, creditCard);
 		//assert
