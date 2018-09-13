@@ -85,4 +85,19 @@ class TestRoom {
 		verify(booking).doTimesConflict(arrivalDate, stayLength);
 		assertEquals("Cannot create an overlapping booking", t.getMessage());
 	}
+	
+	
+	@Test
+	void TestCheckinWhenOccupied() {
+		//arrange
+		room.checkin();
+		assertTrue(room.isOccupied());
+		
+		//act
+		Executable e = () -> room.checkin();
+		Throwable t = assertThrows(RuntimeException.class, e);
+		
+		//assert
+		assertEquals("Cannot checkin to a room that is not READY", t.getMessage());
+	}
 }
