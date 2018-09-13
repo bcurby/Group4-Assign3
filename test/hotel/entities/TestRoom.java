@@ -22,6 +22,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 @ExtendWith(MockitoExtension.class)
 class TestRoom {
 
@@ -47,6 +48,7 @@ class TestRoom {
 	void setUp() throws Exception {
 	}
 
+	
 	@AfterEach
 	void tearDown() throws Exception {
 	}
@@ -66,5 +68,21 @@ class TestRoom {
 		verify(booking).doTimesConflict(arrivalDate, stayLength);
 		assertNotNull(actual);
 		assertTrue(bookings.contains(actual));
+	}
+	
+	
+	@Test
+	void testBookingWithConflict() {
+		//arrange
+		bookings.add(booking);
+		when(booking.doTimesConflict(arrivalDate, stayLength)).thenReturn(true);
+		
+		//act
+		Executable e = () -> room.book(guest, arrivalDate, stayLength, numberOfOccupants, creditCard);
+		Throwable t = assertThrows(RuntimeException.class, e);
+		
+		//assert
+		verify(booking).doTimesConflict(arrivalDate, stayLength);
+		assertEquals("Cannot create an overlapping booking", t.getMessage());
 	}
 }
