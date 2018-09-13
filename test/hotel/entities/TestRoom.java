@@ -53,7 +53,7 @@ class TestRoom {
 
 	
 	@Test
-	void testBooking() {
+	void testBookingNoConflict() {
 		//arrange
 		bookings.add(booking);
 		when(bookingHelper.makeBooking(guest, room, arrivalDate, stayLength, numberOfOccupants, creditCard)).thenReturn(newBooking);
