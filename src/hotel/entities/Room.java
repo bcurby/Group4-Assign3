@@ -23,7 +23,7 @@ public class Room {
 		this.roomType = roomType;
 		bookings = new ArrayList<>();
 		state = State.READY;
-		bookingHelper = new BookingHelper();
+		bookingHelper = BookingHelper.getInstance();
 	}
 	
 
