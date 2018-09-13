@@ -26,6 +26,7 @@ import java.util.Date;
 class TestRoom {
 
 	@Mock Booking booking;
+	@Mock Booking newBooking;
 	@Spy ArrayList<Booking> bookings;
 	@Mock Guest guest;
 	@Mock Date arrivalDate;
@@ -54,12 +55,16 @@ class TestRoom {
 	@Test
 	void testBooking() {
 		//arrange
-		when(bookingHelper.makeBooking(guest, room, arrivalDate, stayLength, numberOfOccupants, creditCard)).thenReturn(booking);
+		bookings.add(booking);
+		when(bookingHelper.makeBooking(guest, room, arrivalDate, stayLength, numberOfOccupants, creditCard)).thenReturn(newBooking);
+		when(booking.doTimesConflict(arrivalDate, stayLength)).thenReturn(false);
+		
 		//act
 		Booking actual = room.book(guest, arrivalDate, stayLength, numberOfOccupants, creditCard);
+		
 		//assert
+		verify(booking).doTimesConflict(arrivalDate, stayLength);
 		assertNotNull(actual);
 		assertTrue(bookings.contains(actual));
 	}
-
 }
