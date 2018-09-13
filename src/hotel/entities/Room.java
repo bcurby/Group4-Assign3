@@ -15,6 +15,7 @@ public class Room {
 	private RoomType roomType;
 	private List<Booking> bookings;
 	private State state;
+	private BookingHelper bookingHelper;
 
 	
 	public Room(int id, RoomType roomType) {
@@ -22,6 +23,7 @@ public class Room {
 		this.roomType = roomType;
 		bookings = new ArrayList<>();
 		state = State.READY;
+		bookingHelper = new BookingHelper();
 	}
 	
 
@@ -63,7 +65,7 @@ public class Room {
 		if (!isAvailable(arrivalDate, stayLength)) {
 			throw new RuntimeException("Cannot create an overlapping booking");	
 		}
-		Booking booking = new Booking(guest, this, arrivalDate, stayLength, numberOfOccupants, creditCard);
+		Booking booking = bookingHelper.makeBooking(guest, this, arrivalDate, stayLength, numberOfOccupants, creditCard);
 		this.bookings.add(booking);
 		return booking;		
 	}
