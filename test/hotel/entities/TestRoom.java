@@ -88,7 +88,7 @@ class TestRoom {
 	
 	
 	@Test
-	void TestCheckinWhenOccupied() {
+	void testCheckinWhenOccupied() {
 		//arrange
 		room.checkin();
 		assertTrue(room.isOccupied());
@@ -100,4 +100,8 @@ class TestRoom {
 		//assert
 		assertEquals("Cannot checkin to a room that is not READY", t.getMessage());
 	}
+	
+	
+	
+	
 }
