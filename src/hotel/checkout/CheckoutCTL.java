@@ -98,7 +98,22 @@ public class CheckoutCTL {
 
 	
 	public void creditDetailsEntered(CreditCardType type, int number, int ccv) {
-		// TODO Auto-generated method stub
+		if (this.state != State.CREDIT) {
+			throw new RuntimeException("Bad State: state is not set to CREDIT");
+		}
+		CreditCard card = new CreditCard(type, number, ccv);
+		boolean cardApproved = CreditAuthorizer.getInstance().authorize(card, this.total);
+		if (!cardApproved) {
+			String mesg = "Credit card was not authorized";
+			this.checkoutUI.displayMessage(mesg);
+		}
+		else {
+			this.hotel.checkout(this.roomId);
+			String cardCharged = "Credit card was successfully charged";
+			this.checkoutUI.displayMessage(cardCharged);
+			this.state = State.COMPLETED;
+			this.checkoutUI.setState(CheckoutUI.State.COMPLETED);
+		}
 	}
 
 
