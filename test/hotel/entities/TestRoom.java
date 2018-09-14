@@ -102,6 +102,21 @@ class TestRoom {
 	}
 	
 	
-	
+	@Test
+	void testCheckoutWhenOccupied() {
+		//arrange
+		bookings.add(booking);
+		room.checkin();
+		assertEquals(1, bookings.size());
+		assertTrue(room.isOccupied());
+		
+		//act
+		room.checkout(booking);
+		
+		//assert
+		verify(bookings).remove(booking);
+		assertTrue(room.isReady());
+		assertEquals(0, bookings.size());
+	}
 	
 }
