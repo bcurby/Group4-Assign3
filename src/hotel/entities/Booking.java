@@ -142,16 +142,14 @@ public class Booking {
 	
 
 	public void addServiceCharge(ServiceType serviceType, double cost) {
-	    //charges.add(serviceType);
+	    
 	}
 
 
 	public void checkOut() {
-	    if (!state.equals(State.CHECKED_IN)) {
-            throw new RuntimeException("Booking: cannot check out"
-                + "while state is not checked in.");
-	    }
-	    //
+	    
 	}
 	    
 }
+	    
+
