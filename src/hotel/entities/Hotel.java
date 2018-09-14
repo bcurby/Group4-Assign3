@@ -85,26 +85,48 @@ public class Hotel {
 	}
 
 	
-	public long book(Room room, Guest guest, 
-			Date arrivalDate, int stayLength, int occupantNumber,
-			CreditCard creditCard) {
-		// TODO Auto-generated method stub
-		return 0L;		
+	  public long book(Room room, Guest guest, Date arrivalDate, int stayLength, int occupantNumber, CreditCard creditCard)
+	  {
+	     Booking booking = room.book(guest, arrivalDate, stayLength, occupantNumber, creditCard);
+	     long confirmationNumber = booking.getConfirmationNumber();
+	     this.bookingsByConfirmationNumber.put(Long.valueOf(confirmationNumber), booking);
+	     return confirmationNumber;	
 	}
 
 	
 	public void checkin(long confirmationNumber) {
 		// TODO Auto-generated method stub
+	    Booking booking = (Booking)this.bookingsByConfirmationNumber.get(Long.valueOf(confirmationNumber));
+	    if (booking == null) {
+	        String message = String.format("Hotel: checkin: No booking found for confirmation number %d", new Object[] { Long.valueOf(confirmationNumber) });
+	        throw new RuntimeException(message);
+	    }
+	      int roomId = booking.getRoomId();
+	      booking.checkIn();
+	      this.activeBookingsByRoomId.put(Integer.valueOf(roomId), booking);
 	}
 
 
 	public void addServiceCharge(int roomId, ServiceType serviceType, double cost) {
 		// TODO Auto-generated method stub
+	    Booking booking = (Booking)this.activeBookingsByRoomId.get(Integer.valueOf(roomId));
+	    if (booking == null) {
+	        String mesg = String.format("Hotel: addServiceCharge: no booking present for room id : %d", new Object[] { Integer.valueOf(roomId) });
+	        throw new RuntimeException(mesg);
+	    }
+	    booking.addServiceCharge(serviceType, cost);
 	}
 
 	
 	public void checkout(int roomId) {
 		// TODO Auto-generated method stub
+	    Booking booking = (Booking)this.activeBookingsByRoomId.get(Integer.valueOf(roomId));
+	    if (booking == null) {
+	       String mesg = String.format("Hotel: checkout: no booking present for room id : %d", new Object[] { Integer.valueOf(roomId) });
+	       throw new RuntimeException(mesg);
+	     }
+	     booking.checkOut();
+	     this.activeBookingsByRoomId.remove(Integer.valueOf(roomId));
 	}
 
 
