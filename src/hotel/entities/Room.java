@@ -88,6 +88,9 @@ public class Room {
 		if (this.state != State.OCCUPIED) {
 			throw new RuntimeException("Cannot checkout of a room that is not OCCUPIED");
 		}
+		if (!bookings.contains(booking)) {
+			throw new RuntimeException("Cannot checkout of a room that is not related to the booking");
+		}
 		this.bookings.remove(booking);
 		this.state = State.READY;
 	}
