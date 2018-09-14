@@ -78,7 +78,7 @@ public class Room {
 
 	public void checkin() {
 		if (this.state != State.READY) {
-			throw new RuntimeException("Cannot checkin to a room that isn't READY");
+			throw new RuntimeException("Cannot checkin to a room that is not READY");
 		}
 		this.state = State.OCCUPIED;
 	}
