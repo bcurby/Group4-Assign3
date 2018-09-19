@@ -7,41 +7,37 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+
+import hotel.RoomHelper;
 import hotel.credit.CreditCard;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
+@ExtendWith(MockitoExtension.class)
 class TestBooking {
 	
-	@Mock Booking booking;
-	@Mock Booking newBooking;
-	@Spy ArrayList<Booking> bookings;
+	Booking booking;
+	Room room;
 	@Mock Guest guest;
-	@Mock Date arrivalDate;
 	@Mock CreditCard creditCard;
-	//@Mock BookingHelper bookingHelper;
-	
-	
-	int roomId = 1;
-	RoomType roomType = RoomType.SINGLE;
-	int stayLength = 1;
-	int numberOfOccupants = roomType.getMaxOccupancy();
-	
-	
-	@InjectMocks Room room = new Room(1, RoomType.SINGLE);
+	SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
-	
+		
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
@@ -54,6 +50,12 @@ class TestBooking {
 	
 	@BeforeEach
 	void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		
+		Date date = format.parse("01-01-2018");
+		
+		room = new Room(101, RoomType.SINGLE);
+		booking = new Booking(guest, room, date, 0, 0, creditCard);
 	}
 
 	
@@ -64,19 +66,17 @@ class TestBooking {
 	
 	@Test
 	void testCheckinRoomAvailable() {
-	
 		
-		//arrange
-		
+		//arrange		
 		assertTrue(booking.isPending());
-		assertTrue(room.isReady());
 		
-		//act
-		Executable e = () -> booking.checkIn();
+		//act	
+		booking.checkIn();
 		
 		//assert
 		assertTrue(booking.isCheckedIn());
-		assertFalse(room.isReady());
-	}
+		
+	}		
+
 
 }

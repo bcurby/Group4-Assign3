@@ -57,6 +57,10 @@ public class Room {
 	public boolean isReady() {
 		return state == State.READY;
 	}
+	
+	public boolean isOccupied() {
+		return state == State.OCCUPIED;
+	}
 
 
 	public Booking book(Guest guest, Date arrivalDate, int stayLength, int numberOfOccupants, CreditCard creditCard) {
