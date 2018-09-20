@@ -49,7 +49,14 @@ public class RecordServiceCTL {
 	
 	
 	public void serviceDetailsEntered(ServiceType serviceType, double cost) {
-		// TODO Auto-generated method stub
+		if (this.state != State.SERVICE) {
+			throw new RuntimeException("State needs to be service");
+		}
+		this.hotel.addServiceCharge(this.roomNumber, serviceType, cost);
+		this.recordServiceUI.displayServiceChargeMessage(this.roomNumber, cost, 
+				serviceType.getDescription());
+		this.state = State.COMPLETED;
+		this.recordServiceUI.setState(RecordServiceUI.State.COMPLETED);
 	}
 
 
