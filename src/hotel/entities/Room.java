@@ -11,10 +11,11 @@ public class Room {
 	
 	private enum State {READY, OCCUPIED}
 	
-	int id;
-	RoomType roomType;
-	List<Booking> bookings;
-	State state;
+	private int id;
+	private RoomType roomType;
+	private List<Booking> bookings;
+	private State state;
+	private BookingHelper bookingHelper;
 
 	
 	public Room(int id, RoomType roomType) {
@@ -22,6 +23,7 @@ public class Room {
 		this.roomType = roomType;
 		bookings = new ArrayList<>();
 		state = State.READY;
+		bookingHelper = BookingHelper.getInstance();
 	}
 	
 
@@ -57,22 +59,39 @@ public class Room {
 	public boolean isReady() {
 		return state == State.READY;
 	}
+	
+	
+	public boolean isOccupied() {
+		return state == State.OCCUPIED;
+	}
 
 
 	public Booking book(Guest guest, Date arrivalDate, int stayLength, int numberOfOccupants, CreditCard creditCard) {
-		// TODO Auto-generated method stub
-		return null;		
+		if (!isAvailable(arrivalDate, stayLength)) {
+			throw new RuntimeException("Cannot create an overlapping booking");	
+		}
+		Booking booking = bookingHelper.makeBooking(guest, this, arrivalDate, stayLength, numberOfOccupants, creditCard);
+		this.bookings.add(booking);
+		return booking;		
 	}
 
 
 	public void checkin() {
-		// TODO Auto-generated method stub
+		if (this.state != State.READY) {
+			throw new RuntimeException("Cannot checkin to a room that is not READY");
+		}
+		this.state = State.OCCUPIED;
 	}
 
 
 	public void checkout(Booking booking) {
-		// TODO Auto-generated method stub
+		if (this.state != State.OCCUPIED) {
+			throw new RuntimeException("Cannot checkout of a room that is not OCCUPIED");
+		}
+		if (!bookings.contains(booking)) {
+			throw new RuntimeException("Cannot checkout of a room that is not related to the booking");
+		}
+		this.bookings.remove(booking);
+		this.state = State.READY;
 	}
-
-
 }
