@@ -147,7 +147,11 @@ public class Booking {
 
 
 	public void checkOut() {
-	    
+		if (this.state != State.CHECKED_IN) {
+			throw new RuntimeException ("cannot checkout if not checked in");	
+		}
+		this.room.checkout(this);
+		this.state = State.CHECKED_OUT;
 	}
 	    
 }
