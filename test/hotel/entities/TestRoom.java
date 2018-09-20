@@ -119,4 +119,19 @@ class TestRoom {
 		assertEquals(0, bookings.size());
 	}
 	
+	
+	@Test
+	void testCheckoutWhenNotOccupied() {
+		//arrange
+		bookings.add(newBooking);
+		room.checkin();
+		assertTrue(room.isReady());
+		
+		//act
+		Executable e = () -> room.checkin();
+		Throwable t = assertThrows(RuntimeException.class, e);
+		
+		//assert
+		assertEquals("Cannot checkout of a room that is not OCCUPIED", t.getMessage());
+	}
 }

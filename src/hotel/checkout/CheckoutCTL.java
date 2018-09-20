@@ -3,6 +3,7 @@ package hotel.checkout;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import hotel.checkout.CheckoutUI.State;
 import hotel.credit.CreditAuthorizer;
 import hotel.credit.CreditCard;
 import hotel.credit.CreditCardType;
@@ -10,6 +11,7 @@ import hotel.entities.Booking;
 import hotel.entities.Guest;
 import hotel.entities.Hotel;
 import hotel.entities.ServiceCharge;
+//removed Room State import
 import hotel.utils.IOUtils;
 
 public class CheckoutCTL {
@@ -78,7 +80,12 @@ public class CheckoutCTL {
 			checkoutUI.setState(CheckoutUI.State.ACCEPT);	
 		}
 	}
+	
 
+	public boolean isCredit() {
+		return state == State.CREDIT;
+	}
+	
 
 	public void chargesAccepted(boolean accepted) {
 		if (state != State.ACCEPT) {
@@ -95,7 +102,7 @@ public class CheckoutCTL {
 			checkoutUI.setState(CheckoutUI.State.CREDIT);
 		}		
 	}
-
+	
 	
 	public void creditDetailsEntered(CreditCardType type, int number, int ccv) {
 		if (this.state != State.CREDIT) {
