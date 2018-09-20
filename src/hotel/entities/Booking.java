@@ -142,7 +142,11 @@ public class Booking {
 	
 
 	public void addServiceCharge(ServiceType serviceType, double cost) {
-	    
+		if (this.state != State.CHECKED_IN) {
+			throw new RuntimeException("Cannot add service charge while not booked in");
+		}
+		ServiceCharge charge = new ServiceCharge(serviceType, cost);
+		this.charges.add(charge);
 	}
 
 
