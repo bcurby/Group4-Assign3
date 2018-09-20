@@ -111,7 +111,7 @@ public class Hotel {
 		// TODO Auto-generated method stub
 	    Booking booking = (Booking)this.activeBookingsByRoomId.get(Integer.valueOf(roomId));
 	    if (booking == null) {
-	        String mesg = String.format("Hotel: addServiceCharge: no booking present for room id : %d", new Object[] { Integer.valueOf(roomId) });
+	        String mesg = String.format("Hotel: addServiceCharge: no booking found for room id : %d", new Object[] { Integer.valueOf(roomId) });
 	        throw new RuntimeException(mesg);
 	    }
 	    booking.addServiceCharge(serviceType, cost);
@@ -122,7 +122,7 @@ public class Hotel {
 		// TODO Auto-generated method stub
 	    Booking booking = (Booking)this.activeBookingsByRoomId.get(Integer.valueOf(roomId));
 	    if (booking == null) {
-	       String mesg = String.format("Hotel: checkout: no booking present for room id : %d", new Object[] { Integer.valueOf(roomId) });
+	       String mesg = String.format("Hotel: checkout: no booking found for room id : %d", new Object[] { Integer.valueOf(roomId) });
 	       throw new RuntimeException(mesg);
 	     }
 	     booking.checkOut();
