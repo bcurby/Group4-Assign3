@@ -36,6 +36,7 @@ public class Room {
 		return id;
 	}
 	
+	
 	public String getDescription() {
 		return roomType.getDescription();
 	}
@@ -44,6 +45,7 @@ public class Room {
 	public RoomType getType() {
 		return roomType;
 	}
+	
 	
 	public boolean isAvailable(Date arrivalDate, int stayLength) {
 		IOUtils.trace("Room: isAvailable");
