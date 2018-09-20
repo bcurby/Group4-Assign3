@@ -60,10 +60,7 @@ public class Room {
 		return state == State.READY;
 	}
 	
-<<<<<<< HEAD
-=======
-	
->>>>>>> master
+
 	public boolean isOccupied() {
 		return state == State.OCCUPIED;
 	}
