@@ -18,14 +18,14 @@ public class BookingCTL {
 	
 	private static enum State {PHONE, ROOM, REGISTER, TIMES, CREDIT, APPROVED, CANCELLED, COMPLETED}	
 	
-	private BookingUI bookingUI;
+	public BookingUI bookingUI;
 	private Hotel hotel;
 
 	private Guest guest;
 	private Room room;
 	private double cost;
 	
-	private State state;
+	public State state;
 	private int phoneNumber;
 	private RoomType selectedRoomType;
 	private int occupantNumber;
