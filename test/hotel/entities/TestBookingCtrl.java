@@ -170,14 +170,37 @@ class TestBookingCtrl {
         assertTrue(BookingUI.State.COMPLETED == uiStateCaptor.getValue());
         assertTrue(State.COMPLETED == control.state);
         
-        ;
         
+    }
+    @Test
+    void testCreditDetailsEnteredCreditNotApproved() {
+        //arrange
+        control.state = State.CREDIT;
+        control.guest = guest;
+        control.room = room;
+        control.cost = cost;
+        control.arrivalDate = arrivalDate;
+        control.stayLength = stayLength;
+        control.occupantNumber = occupantNumber;
         
+        ArgumentCaptor<String> mesgCaptor = ArgumentCaptor.forClass(String.class);
+        when(creditCardHelper.makeCreditCard(any(),anyInt(),anyInt())).thenReturn(creditCard);
+        when(authorizer.authorize(any(0, anyDouble())).thenReturn(false);
+        when(creditCard.getVendor()).thenReturn(cardType.getVendor());
+        when(creditCard.getNumber()).thenReturn(cardNum);
+        String expectedMessage = String.format("\n%$ credit card number %d was not authorised for $%.2f\n", cardType.getVendor(), cardNum, cost);
+        assertTrue(control.state == State.CREDIT);
         
+        //act
+        control.creditDetailsEntered(cardType.VISA, 1,1);
         
-        
+        //assert
+        verify(CreditCard).makeCreditCard(any(),anyInt(),anyInt());
+        verify(autrhorizer).authorize(creditCard, cost);
+        verify(bookingUI).displayMessage(mesgCaptor.capture());
+        assertEquals(expectedMessage, mesgCaptor.getValue());
+        assertTrue(State.CREDIT == control.state);
         
         
     }
-
 }
