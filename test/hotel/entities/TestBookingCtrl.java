@@ -1,5 +1,6 @@
 package hotel.entities;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +42,7 @@ class TestBookingCtrl {
     int cardNum;
     CreditCardType cardType;
     long confNum;
+    Room room;
     
     static SimpleDateFormat format;
     BookingCTL control;
@@ -109,7 +111,67 @@ class TestBookingCtrl {
         assertEquals("461", addressCaptor.getValue());
         assertTrue(1 == phoneCaptor.getValue());
         assertTrue(BookingUI.State.ROOM == uiStateCaptor.getValue());
-        assertTrue(state.ROOM == control.state);
+        assertTrue(State.ROOM == control.state);
+        
+        
+    }
+    @Test
+    void testCreditDetailsEnteredCreditApproved() {
+        //arrange
+        control.state = State.CREDIT;
+        control.guest = guest;
+        control.room = room;
+        control.cost = cost;
+        control.arrivalDate = arrivalDate;
+        control.stayLength = stayLength;
+        control.occupantNumber = occupantNumber;
+        
+        ArgumentCaptor<String> descCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> nameCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> vendorCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<Integer> numCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Integer> stayCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Integer> cardNumCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Date> dateCaptor = ArgumentCaptor.forClass(Date.class);
+        ArgumentCaptor<Double> costCaptor = ArgumentCaptor.forClass(Double.class);
+        ArgumentCaptor<Long> confNumCaptor = ArgumentCaptor.forClass(Long.class);
+        ArgumentCaptor<BookingUI.State> uiStateCaptor = ArgumentCaptor.forClass(BookingUI.State.class);
+        
+        when(CreditCard.makeCreditCard(any(),anyInt(), anyInt())).thenReturn(creditCard);
+        when(authorizer, authorize(any(), anyDouble())).thenReturn(true);
+        when(hotel.book(room, guest, arrivalDate, stayLength, occupantNumber, creditCard)).thenReturn(confNum);
+        when(room.getDescription()).thenReturn("Description");
+        when(room.getId()).thenReturn(101);
+        when(guest.getName()).thenReturn("Eric");
+        when(creditCard.getVendor()).thenReturn(cardType.getVendor());
+        when(creditCard.getNumber()).thenReturn(cardNum);
+        
+        assertTrue(control.state == State.CREDIT);
+        
+        //act
+        control.creditDetailsEntered(cardType.VISA, 1,1);
+        
+        //assert
+        verify(CreditCard).makeCreditCard(any(),anyInt(),anyInt());
+        verify(autrhorizer).authorize(creditCard, cost);
+        verify(hotel).book(room,guest,arrivalDate, stayLength, occupantNumber, creditCard);
+        verify(bookingUI).displayConfirmedBooking(descCaptor.capture(), numCaptor.capture(), dateCaptor.capture(), stayCaptor.capture(), costCaptor.capture(), confNumCaptor.capture());
+        verify(bookingUI).setState(uiStateCaptor.capture());
+        
+        assertEquals("Description", descCaptor.getValue());
+        assertTrue(101 == numCaptor.getValue());
+        assertEquals(arrivalDate, dateCaptor.getValue());
+        assertTrue(1 == stayCaptor.getValue());
+        assertEquals("Eric", nameCaptor.getValue());
+        assertEquals("Visa", vendorCaptor.getValue());
+        assertTrue(1 ==  cardNumCaptor.getValue());
+        assertEquals(cost, costCaptor.getValue(), 0.001);
+        assertTrue(confNum == confNumCaptor.getValue());
+        assertTrue(BookingUI.State.COMPLETED == uiStateCaptor.getValue());
+        assertTrue(State.COMPLETED == control.state);
+        
+        ;
+        
         
         
         
