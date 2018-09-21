@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -203,4 +204,31 @@ class TestBookingCtrl {
         
         
     }
+    
+   @Test
+   void testCreditDetailsEnteredControlNotInCreditState() {
+       //arrange
+       control.state = State.TIMES;
+       control.guest = guest;
+       control.room = room;
+       control.cost = cost;
+       control.arrivalDate = arrivalDate;
+       control.stayLength = stayLength;
+       control.occupantNumber = occupantNumber;
+       
+       String expectedMessage = String.format("BookingCTL: bookingTimesEntered : bad state : %s", State.values());
+       
+       assertTrue(control.state != State.CREDIT);
+       
+       //act
+       Executable e = () -> control.creditDetailsEntered(cardType.VISA, 1,1);
+       
+       //assert
+       Throwable t = assertThrows(RuntimeException.class, e);
+       assertEquals(expectedMessage, t.getMessage());
+       assertTrue(State.TIMES == control.state);
+       
+   }
+    
+    
 }
