@@ -94,17 +94,17 @@ class TestCheckInCTL {
 	}
 	
 	
-//	@Test
-//	void testCheckinCTLCancelled() {		
-//		//arrange		
-//		
-//		
-//		//act
-//		Executable executable = () -> checkinCTL.checkInConfirmed(true);		
-//				
-//		//assert
-//		assertThrows(RuntimeException.class, executable);
-//		
-//	}
+	@Test
+	void testCheckinCTLCancelled() {		
+		//arrange		
+		
+		
+		//act
+		Executable executable = () -> checkinCTL.checkInConfirmed(true);		
+				
+		//assert
+		assertThrows(RuntimeException.class, executable);
+		
+	}
 	
 }
