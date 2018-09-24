@@ -32,7 +32,7 @@ public class CheckinCTL {
 
 	
 	public void confirmationNumberEntered(long confirmationNumber) {
-		if (state != State.CHECKING) {
+		if (this.state != State.CHECKING) {
 			String mesg = String.format("CheckInCTL: confirmationNumberEntered : bad state : %s", state);
 			throw new RuntimeException(mesg);
 		}
@@ -72,7 +72,7 @@ public class CheckinCTL {
 						card.getVendor(), card.getNumber(),
 						booking.getConfirmationNumber());	
 				
-				state = State.CONFIRMING;
+				this.state = State.CONFIRMING;
 				checkInUI.setState(CheckinUI.State.CONFIRMING);
 			}
 		}
@@ -97,7 +97,7 @@ public class CheckinCTL {
 
 	public void cancel() {
 		checkInUI.displayMessage("Checking in cancelled");
-		state = State.CANCELLED;
+		this.state = State.CANCELLED;
 		checkInUI.setState(CheckinUI.State.CANCELLED);
 	}
 	

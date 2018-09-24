@@ -157,7 +157,7 @@ public class Booking {
 		this.room.checkout(this);
 		this.state = State.CHECKED_OUT;
 	}
-	    
+
 }
 	    
 
