@@ -29,7 +29,7 @@ class TestBookingCtrl {
     @Mock BookingUI bookingUI;
     @Mock Hotel hotel;
     @Mock CreditAuthorizer authorizer;
-    @Mock CreditCardHelper creditCardHelper;
+    @Mock CreditCard creditCardHelper;
     @Mock Guest guest;
     @Mock CreditCard creditCard;
     
@@ -66,7 +66,7 @@ class TestBookingCtrl {
         control = new BookingCTL(hotel);
         control.bookingUI = bookingUI;
         control.authorizer = authorizer;
-        control.creditcardHelper = creditCardHelper;
+        control.creditCardHelper = creditCardHelper;
         
         arrivalDate = format.parse("11-09-2001");
         stayLength = 1;
@@ -75,7 +75,6 @@ class TestBookingCtrl {
         cardType = CreditCardType.VISA;
         cost = 111.11;
         confNum = 11092001101L;
-        
         
         
     }
@@ -154,7 +153,7 @@ class TestBookingCtrl {
         
         //assert
         verify(CreditCard).makeCreditCard(any(),anyInt(),anyInt());
-        verify(autrhorizer).authorize(creditCard, cost);
+        verify(authorizer).authorize(creditCard, cost);
         verify(hotel).book(room,guest,arrivalDate, stayLength, occupantNumber, creditCard);
         verify(bookingUI).displayConfirmedBooking(descCaptor.capture(), numCaptor.capture(), dateCaptor.capture(), stayCaptor.capture(), costCaptor.capture(), confNumCaptor.capture());
         verify(bookingUI).setState(uiStateCaptor.capture());
@@ -170,8 +169,7 @@ class TestBookingCtrl {
         assertTrue(confNum == confNumCaptor.getValue());
         assertTrue(BookingUI.State.COMPLETED == uiStateCaptor.getValue());
         assertTrue(State.COMPLETED == control.state);
-        
-        
+
     }
     @Test
     void testCreditDetailsEnteredCreditNotApproved() {
@@ -201,7 +199,6 @@ class TestBookingCtrl {
         verify(bookingUI).displayMessage(mesgCaptor.capture());
         assertEquals(expectedMessage, mesgCaptor.getValue());
         assertTrue(State.CREDIT == control.state);
-        
         
     }
     

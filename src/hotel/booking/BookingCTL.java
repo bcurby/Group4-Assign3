@@ -32,6 +32,8 @@ public class BookingCTL {
 	public int occupantNumber;
 	public Date arrivalDate;
 	public int stayLength;
+    public CreditCard creditCardHelper;
+    public CreditAuthorizer authorizer;
 
 	
 	public BookingCTL(Hotel hotel) {
