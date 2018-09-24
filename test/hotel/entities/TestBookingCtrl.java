@@ -44,6 +44,7 @@ class TestBookingCtrl {
     CreditCardType cardType;
     long confNum;
     Room room;
+    int ccv;
     
     static SimpleDateFormat format;
     BookingCTL control;
@@ -191,7 +192,7 @@ class TestBookingCtrl {
         assertTrue(control.state == State.CREDIT);
         
         //act
-        control.creditDetailsEntered(cardType.VISA, 1,1);
+        control.creditDetailsEntered(cardType, cardNum,ccv);
         
         //assert
         verify(CreditCard).makeCreditCard(any(),anyInt(),anyInt());
