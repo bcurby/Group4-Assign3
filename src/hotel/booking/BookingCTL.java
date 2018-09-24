@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import hotel.booking.BookingUI.State;
 import hotel.credit.CreditAuthorizer;
 import hotel.credit.CreditCard;
 import hotel.credit.CreditCardType;
@@ -18,19 +19,21 @@ public class BookingCTL {
 	
 	private static enum State {PHONE, ROOM, REGISTER, TIMES, CREDIT, APPROVED, CANCELLED, COMPLETED}	
 	
-	private BookingUI bookingUI;
+	public BookingUI bookingUI;
 	private Hotel hotel;
 
-	private Guest guest;
-	private Room room;
-	private double cost;
+	public Guest guest;
+	public Room room;
+	public double cost;
 	
-	private State state;
-	private int phoneNumber;
-	private RoomType selectedRoomType;
-	private int occupantNumber;
-	private Date arrivalDate;
-	private int stayLength;
+	public State state;
+	public int phoneNumber;
+	public RoomType selectedRoomType;
+	public int occupantNumber;
+	public Date arrivalDate;
+	public int stayLength;
+    public CreditCard creditCardHelper;
+    public CreditAuthorizer authorizer;
 
 	
 	public BookingCTL(Hotel hotel) {
