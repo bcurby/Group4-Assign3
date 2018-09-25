@@ -36,6 +36,7 @@ class TestCheckoutCTL {
 	@Mock CreditCard creditCard;
 	@Mock Hotel hotel;
 	@Mock CreditAuthorizer authorizer;
+	@Mock CheckoutUI checkoutUI;
 	
 	int roomId = 1;
 	int number = 1;
@@ -87,6 +88,25 @@ class TestCheckoutCTL {
 		when(authorizer.authorize(creditCard, amount)).thenReturn(false);
 		
 		//assert
-		assertEquals(expectedMessage);
+		assertEquals("Credit card was not authorized", checkoutUI.getMessage());
+	}
+	
+	
+	@Test 
+	void testCreditDetailsEnteredAuthorized() {
+		//arrange
+		checkoutCTL.state = State.CREDIT;
+		checkoutCTL.creditDetailsEntered(type, number, ccv);
+		assertTrue(State.CREDIT == checkoutCTL.state);
+		
+		String expectedMessage = "Credit card was successfully charged";
+		
+		//act
+		when(authorizer.authorize(creditCard, amount)).thenReturn(true);
+		when(hotel.checkout(anyInt()));
+		
+		//assert
+		assertEquals("Credit card was successfully charged", checkoutUI.getMessage());
+		assertTrue(State.COMPLETED == checkoutCTL.state);
 	}
 }
