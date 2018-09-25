@@ -26,7 +26,7 @@ public class BookingCTL {
     public Room room;
     public double cost;
     
-    public State state;
+    State state;
     public int phoneNumber;
     public RoomType selectedRoomType;
     public int occupantNumber;

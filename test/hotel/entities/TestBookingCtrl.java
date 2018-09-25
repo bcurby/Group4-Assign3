@@ -15,7 +15,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
+import static org.mockito.Mockito.*;
 import hotel.booking.BookingCTL;
 import hotel.booking.BookingUI;
 import hotel.booking.BookingUI.State;
