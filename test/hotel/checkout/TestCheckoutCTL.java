@@ -13,9 +13,12 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import hotel.checkout.CheckoutCTL.State;
+import hotel.credit.CreditAuthorizer;
 import hotel.credit.CreditCard;
 import hotel.credit.CreditCardType;
 import hotel.entities.Booking;
+import hotel.entities.Hotel;
 import hotel.entities.Room;
 import hotel.entities.RoomType;
 
@@ -31,11 +34,14 @@ import java.util.Date;
 class TestCheckoutCTL {
 	
 	@Mock CreditCard creditCard;
-	
+	@Mock Hotel hotel;
+	@Mock CreditAuthorizer authorizer;
 	
 	int roomId = 1;
 	int number = 1;
 	int ccv = 1;
+	int amount = 20;
+	
 	CreditCardType type = CreditCardType.VISA;
 	
 
@@ -55,8 +61,9 @@ class TestCheckoutCTL {
 	@Test
 	void testCreditDetailsEnteredConflict() {
 		//arrange
+		checkoutCTL.state = State.ROOM;
 		checkoutCTL.creditDetailsEntered(type, number, ccv);
-		assertFalse(checkoutCTL.isCredit());
+		assertFalse(State.CREDIT == checkoutCTL.state);
 		
 		//act
 		Executable e = () -> checkoutCTL.creditDetailsEntered(type, number, ccv);
@@ -66,4 +73,20 @@ class TestCheckoutCTL {
 		assertEquals("Bad State: state is not set to CREDIT", t.getMessage());
 	}
 
+	
+	@Test
+	void testCreditDetailsEnteredCardNotAuthorized() {
+		//arrange
+		checkoutCTL.state = State.CREDIT;
+		checkoutCTL.creditDetailsEntered(type, number, ccv);
+		assertTrue(State.CREDIT == checkoutCTL.state);
+		
+		String expectedMessage = "Credit card was not authorized";
+		
+		//act
+		when(authorizer.authorize(creditCard, amount)).thenReturn(false);
+		
+		//assert
+		assertEquals(expectedMessage);
+	}
 }
