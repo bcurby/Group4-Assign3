@@ -35,6 +35,16 @@ public class HotelHelper {
 		Guest guest = new Guest("Fred", "Nurke", 2);
 		CreditCard card = new CreditCard(CreditCardType.VISA, 2, 2);
 		
+		Guest guest1 = new Guest("Herman", "1313 Mockingbird Lane", 333);
+		CreditCard card1 = new CreditCard(CreditCardType.VISA, 4, 4);
+		
+		Guest guest2 = new Guest("Stormy", "6 High Drive", 999);
+        CreditCard card2 = new CreditCard(CreditCardType.VISA, 5, 5);
+        
+        Guest guest3 = new Guest("Trump", "1600 Pen Ave", 666);
+        CreditCard card3 = new CreditCard(CreditCardType.MASTERCARD, 5, 5);
+		
+		
 		Room room = hotel.findAvailableRoom(RoomType.TWIN_SHARE, date, 1);
 		long confNo = hotel.book(room, guest, date, 1, 2, card);
 		Booking booking = hotel.findBookingByConfirmationNumber(confNo);
