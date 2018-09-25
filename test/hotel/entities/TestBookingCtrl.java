@@ -105,7 +105,7 @@ class TestBookingCtrl {
         //assert
         verify(hotel).isRegistered(anyInt());
         verify(hotel).findGuestByPhoneNumber(anyInt());
-        verify(bookingUI).displayGuestdetails(nameCaptor.capture(), addressCaptor.capture(), phoneCaptor.capture());
+        verify(bookingUI).displayGuestDetails(nameCaptor.capture(), addressCaptor.capture(), phoneCaptor.capture());
         verify(bookingUI).setState(uiStateCaptor.capture());
         
         assertEquals("Eric", nameCaptor.getValue());
@@ -153,7 +153,7 @@ class TestBookingCtrl {
         control.creditDetailsEntered(cardType.VISA, 1,1);
         
         //assert
-        verify(CreditCard).makeCreditCard(any(),anyInt(),anyInt());
+        verify(creditCard).makeCreditCard(any(),anyInt(),anyInt());
         verify(authorizer).authorize(creditCard, cost);
         verify(hotel).book(room,guest,arrivalDate, stayLength, occupantNumber, creditCard);
         verify(bookingUI).displayConfirmedBooking(descCaptor.capture(), numCaptor.capture(), dateCaptor.capture(), stayCaptor.capture(), costCaptor.capture(), confNumCaptor.capture());
@@ -195,8 +195,8 @@ class TestBookingCtrl {
         control.creditDetailsEntered(cardType, cardNum,ccv);
         
         //assert
-        verify(CreditCard).makeCreditCard(any(),anyInt(),anyInt());
-        verify(autrhorizer).authorize(creditCard, cost);
+        verify(creditCard).makeCreditCard(any(),anyInt(),anyInt());
+        verify(authorizer).authorize(creditCard, cost);
         verify(bookingUI).displayMessage(mesgCaptor.capture());
         assertEquals(expectedMessage, mesgCaptor.getValue());
         assertTrue(State.CREDIT == control.state);

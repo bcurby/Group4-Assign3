@@ -17,23 +17,23 @@ import hotel.utils.IOUtils;
 public class BookingCTL {
     
     
-    private static enum State {PHONE, ROOM, REGISTER, TIMES, CREDIT, APPROVED, CANCELLED, COMPLETED}    
+    static enum State {PHONE, ROOM, REGISTER, TIMES, CREDIT, APPROVED, CANCELLED, COMPLETED}    
     
-    public BookingUI bookingUI;
-    private Hotel hotel;
+    BookingUI bookingUI;
+    Hotel hotel;
 
-    public Guest guest;
-    public Room room;
-    public double cost;
+    Guest guest;
+    Room room;
+    double cost;
     
     State state;
-    public int phoneNumber;
-    public RoomType selectedRoomType;
-    public int occupantNumber;
-    public Date arrivalDate;
-    public int stayLength;
-    public CreditCard creditCardHelper;
-    public CreditAuthorizer authorizer;
+    int phoneNumber;
+    RoomType selectedRoomType;
+    int occupantNumber;
+    Date arrivalDate;
+    int stayLength;
+    CreditCard creditCardHelper;
+    CreditAuthorizer authorizer;
 
     
     public BookingCTL(Hotel hotel) {
