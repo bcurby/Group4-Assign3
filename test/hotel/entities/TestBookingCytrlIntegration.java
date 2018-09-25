@@ -209,7 +209,7 @@ class TestBookingCytrlIntegration {
        verify(bookingUI).displayConfirmedBooking(descCaptor.capture(), numCaptor.capture(), dateCaptor.capture(), stayCaptor.capture(), nameCaptor.capture(), vendorCaptor.capture(), cardNumCaptor.capture(), costCaptor.capture(), confNumCaptor.capture());
        verify(bookingUI).setState(uiStateCaptor.capture());
        assertEquals(roomType.getDescription(), descCaptor.getValue());
-       System.out.println(room.getID);
+       System.out.println(room.getId);
        System.out.println(numCaptor.capture());
        assertTrue(room.getId() == numCaptor.getValue());
        assertEquals(arrivalDate, dateCaptor.getValue());
