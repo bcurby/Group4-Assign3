@@ -7,6 +7,7 @@ import java.util.Date;
 import hotel.booking.BookingUI.State;
 import hotel.credit.CreditAuthorizer;
 import hotel.credit.CreditCard;
+import hotel.credit.CreditCardHelper;
 import hotel.credit.CreditCardType;
 import hotel.entities.Guest;
 import hotel.entities.Hotel;
@@ -17,10 +18,10 @@ import hotel.utils.IOUtils;
 public class BookingCTL {
     
     
-    private static enum State {PHONE, ROOM, REGISTER, TIMES, CREDIT, APPROVED, CANCELLED, COMPLETED}    
+    public static enum State {PHONE, ROOM, REGISTER, TIMES, CREDIT, APPROVED, CANCELLED, COMPLETED}    
     
     public BookingUI bookingUI;
-    private Hotel hotel;
+    public Hotel hotel;
 
     public Guest guest;
     public Room room;
@@ -32,7 +33,7 @@ public class BookingCTL {
     public int occupantNumber;
     public Date arrivalDate;
     public int stayLength;
-    public CreditCard creditCardHelper;
+    public CreditCardHelper creditCardHelper;
     public CreditAuthorizer authorizer;
 
     

@@ -15,7 +15,7 @@ public class BookingUI {
 	
 	public static enum State {PHONE, ROOM, REGISTER, TIMES, CREDIT, CANCELLED, COMPLETED};
 	
-	private State state;
+	 State state;
 	
 	
 	public BookingUI(BookingCTL bookingCTL) {

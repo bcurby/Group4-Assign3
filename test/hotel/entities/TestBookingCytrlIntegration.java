@@ -1,9 +1,9 @@
 package hotel.entities;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import static org.mockito.Mockito.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,6 +21,10 @@ import hotel.booking.BookingUI.State;
 import hotel.credit.CreditAuthorizer;
 import hotel.credit.CreditCard;
 import hotel.credit.CreditCardType;
+import hotel.credit.CreditCardHelper;
+import hotel.entities.*;
+import hotel.makebooking.BookingCTL.State;
+
 
 
 class TestBookingCytrlIntegration {
@@ -28,7 +32,7 @@ class TestBookingCytrlIntegration {
     @Mock BookingUI bookingUI;
     @Mock Hotel hotel;
     @Mock CreditAuthorizer authorizer;
-    @Mock CreditCard CreditCardHelper;
+    @Mock hotel.credit.CreditCardHelper CreditCardHelper;
     @Mock Guest guest;
     @Mock CreditCard creditCard;
     
