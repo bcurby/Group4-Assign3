@@ -68,11 +68,11 @@ class TestBookingScenarios {
         control.phoneNumberEntered(phone);
         verify(ui).displayGuestDetails(any(), any(),anyInt());
         verify(ui, times(1)).setState(any());
-        assertTrue(control.State == BookingCTL.State.ROOM);
+        assertTrue(control.state == BookingCTL.State.ROOM);
         
         control.roomTypeAndOccupantsEntered(roomType, occupantNumber);
         verify(ui, times(2)).setState(any());
-        assertTrue(control.State == BookingCTL.State.TIMES);
+        assertTrue(control.state == BookingCTL.State.TIMES);
         
         control.bookingTimesEntered(date, stayLength);
         control.creditDetailsEntered(cardType, cardNum, ccv);

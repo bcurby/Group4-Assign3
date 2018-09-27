@@ -32,7 +32,7 @@ class TestBookingCytrlIntegration {
     @Mock BookingUI bookingUI;
     @Mock Hotel hotel;
     @Mock CreditAuthorizer authorizer;
-    @Mock CreditCard CreditCardHelper;
+    @Mock hotel.credit.CreditCardHelper CreditCardHelper;
     @Mock Guest guest;
     @Mock CreditCard creditCard;
     
