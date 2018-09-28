@@ -8,6 +8,7 @@ import java.util.Date;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -50,5 +51,21 @@ class TestRoomBookingIntegration {
 		//assert
 		assertTrue(booking.isCheckedIn());
 		assertFalse(room.isReady());	
+	}
+	
+	
+	@Test
+	void testCheckinRoomOccupied() {
+		//arrange
+		room.checkin();
+		assertTrue(booking.isPending());
+		assertFalse(room.isReady());
+		
+		//act
+		Executable e = () -> booking.checkIn();
+		
+		//assert
+		Throwable t = assertThrows(RuntimeException.class, e);
+		assertEquals("Cannot checkin to a room that is not READY", t.getMessage());
 	}
 }
