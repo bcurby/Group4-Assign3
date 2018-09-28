@@ -67,6 +67,7 @@ class TestCheckoutCTL {
 		roomId = 1;
 		total = 111.11;
 		cardType = CreditCardType.VISA;
+		
 	}
 
 	@AfterEach
@@ -144,7 +145,7 @@ class TestCheckoutCTL {
 		assertTrue(control.state == State.CREDIT);
 		
 		//act
-		control.creditDetailsEntered(cardType, roomId, ccv);
+		control.creditDetailsEntered(cardType, number, ccv);
 		
 		//assert
 		verify(creditCardHelper).makeCreditCard(any(),anyInt(),anyInt());
