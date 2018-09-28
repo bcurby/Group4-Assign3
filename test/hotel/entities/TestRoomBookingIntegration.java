@@ -68,4 +68,21 @@ class TestRoomBookingIntegration {
 		Throwable t = assertThrows(RuntimeException.class, e);
 		assertEquals("Cannot checkin to a room that is not READY", t.getMessage());
 	}
+	
+	
+	@Test
+	void testCheckinBookingNotPending() {
+		//arrange
+		booking.checkIn();
+		assertFalse(booking.isPending());
+		assertFalse(room.isReady());
+		
+		//act
+		Executable e = () -> booking.checkIn();
+
+		//assert
+		Throwable t = assertThrows(RuntimeException.class, e);
+		assertEquals("cannot checkin when state pending", t.getMessage());
+
+	}
 }
