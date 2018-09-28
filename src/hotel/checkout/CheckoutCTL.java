@@ -6,6 +6,7 @@ import java.util.List;
 import hotel.checkout.CheckoutUI.State;
 import hotel.credit.CreditAuthorizer;
 import hotel.credit.CreditCard;
+import hotel.credit.CreditCardHelper;
 import hotel.credit.CreditCardType;
 import hotel.entities.Booking;
 import hotel.entities.Guest;
@@ -16,14 +17,16 @@ import hotel.utils.IOUtils;
 
 public class CheckoutCTL {
 
-	private enum State {ROOM, ACCEPT, CREDIT, CANCELLED, COMPLETED };
+	public enum State {ROOM, ACCEPT, CREDIT, CANCELLED, COMPLETED };
 	
-	private Hotel hotel;
-	private State state;
-	private CheckoutUI checkoutUI;
-	private double total;
-	private int roomId;
-
+	CreditAuthorizer authorizer;
+	CreditCardHelper creditCardHelper;
+	Hotel hotel;
+	State state;
+	CheckoutUI checkoutUI;
+	double total;
+	int roomId;
+	
 
 	public CheckoutCTL(Hotel hotel) {
 		this.hotel = hotel;
@@ -108,8 +111,8 @@ public class CheckoutCTL {
 		if (this.state != State.CREDIT) {
 			throw new RuntimeException("Bad State: state is not set to CREDIT");
 		}
-		CreditCard card = new CreditCard(type, number, ccv);
-		boolean cardApproved = CreditAuthorizer.getInstance().authorize(card, this.total);
+		CreditCard creditCard = creditCardHelper.makeCreditCard(type, number, ccv);
+		boolean cardApproved = CreditAuthorizer.getInstance().authorize(creditCard, this.total);
 		if (!cardApproved) {
 			String mesg = "Credit card was not authorized";
 			this.checkoutUI.displayMessage(mesg);
