@@ -190,7 +190,7 @@ class TestCheckoutScenarios {
 		verify(ui, times(1)).setState(any());
 		assertTrue(control.state == CheckoutCTL.State.CREDIT);
 
-		control.creditDetailsEntered(type, number, ccv);
+		control.creditDetailsEntered(type, 7, ccv);
 		verify(ui).displayMessage(anyString());
 		verify(ui, times(1)).setState(any());
 		assertTrue(control.state == CheckoutCTL.State.CREDIT);
