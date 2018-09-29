@@ -187,4 +187,47 @@ class TestCheckoutCTLIntegration {
 		assertTrue(CheckoutUI.State.COMPLETED == uiStateCaptor.getValue());
 		assertTrue(State.COMPLETED == control.state);
 	}
+	
+	
+	@Test
+	void testCreditDetailsEnteredCreditApprovedWithEverythingReal() {
+		//arrange
+		control.state = State.CREDIT;
+		control.total =total;
+		control.roomId = roomId;
+		roomId = 25;
+		
+		hotel = new Hotel();
+		control.hotel = hotel;
+		
+		ArgumentCaptor<String> cardChargedMessageCaptor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<Integer> roomIdCaptor = ArgumentCaptor.forClass(Integer.class);
+		ArgumentCaptor<CheckoutUI.State> uiStateCaptor = ArgumentCaptor.forClass(CheckoutUI.State.class);
+		
+		//when(creditCardHelper.makeCreditCard(any(),anyInt(),anyInt())).thenReturn(creditCard);
+		creditCardHelper = new CreditCardHelper();
+		control.creditCardHelper = creditCardHelper;
+		
+		//when(authorizer.authorize(any(), anyDouble())).thenReturn(true);
+		authorizer = CreditAuthorizer.getInstance();
+		control.authorizer = authorizer;
+		
+		hotel.checkout(roomId);
+		//when(checkoutUI.displayMessage(anyString())).thenReturn("Message");
+		
+		assertTrue(control.state == State.CREDIT);
+		
+		//act
+		control.creditDetailsEntered(cardType.VISA, 1, 1);
+		
+		//assert
+		//verify(creditCardHelper).makeCreditCard(any(),anyInt(),anyInt());
+		//verify(authorizer).authorize(creditCard, total);
+		
+		assertEquals("Credit card was successfully charged", cardChargedMessageCaptor.getValue());
+		assertTrue(25 == roomIdCaptor.getValue());
+		
+		assertTrue(CheckoutUI.State.COMPLETED == uiStateCaptor.getValue());
+		assertTrue(State.COMPLETED == control.state);
+	}
 }
