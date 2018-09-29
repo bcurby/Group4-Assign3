@@ -146,4 +146,27 @@ class TestCheckoutScenarios {
 		verify(ui, times(1)).setState(any());
 		assertTrue(control.state == CheckoutCTL.State.COMPLETED);
 	}
+	
+	
+	@Test
+	void testExistingGuestWhenChargesNotAccepted() {
+		//arrange
+		number = 1;
+		roomId = 1;
+		total = 111.11;
+		type = CreditCardType.VISA;
+		
+		//act
+		control.roomIdEntered(roomId);
+		verify(ui).displayMessage(anyString());
+		verify(ui, times(1)).setState(any());
+		assertTrue(control.state == CheckoutCTL.State.ACCEPT);
+				
+		control.chargesAccepted(false);
+		verify(ui).displayMessage(anyString());
+		verify(ui).displayMessage(anyString());
+		verify(ui, times(1)).setState(any());
+		assertTrue(control.state == CheckoutCTL.State.CANCELLED);
+		
+	}
 }
